@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+
+set_time_limit(0);
+
+$bootstrap = require_once __DIR__ . '/bootstrap.php';
+
+$app = $bootstrap['console'];
+
+$path = realpath(__DIR__ . "/../") . '/src/Console';
+foreach (glob($path . "/*Command.php") as $filename) {
+    $basename = basename($filename, '.php');
+    $commandWithNamespace = '\\Console\\' . $basename;
+
+    $app->add(new $commandWithNamespace($bootstrap));
+}
+
+$app->run();
+
+?>
