@@ -4,13 +4,11 @@ namespace Helper;
 
 class MementoOriginatorModel
 {
-    private $memento;
-
     private $fullName;
     private $age;
     private $dateOfBirth;
     private $address;
-    private $treatment;
+    private $content;
 
     public function __construct()
     {
@@ -19,44 +17,14 @@ class MementoOriginatorModel
         $this->setDateOfBirth('2015-01-20');
         $this->setAddress('Kanaalweg 29');
 
-        $treatment = new \Model\Treatment();
-        $treatment->setDescription('First test');
-        $this->setTreatment($treatment);
-    }
-
-    public function isDirty()
-    {
-        if (null !== $this->memento) {
-            $memento = $this->memento->get();
-            $freezedMemento = $this->memento;
-            $this->memento = null;
-
-            $isDirty = $memento != $this;
-            $this->memento = $freezedMemento;
-
-            return $isDirty;
-        }
-
-        return false;
+        $content = new \Model\Content();
+        $content->setDescription('First test');
+        $this->setContent($content);
     }
 
     public function setMemento()
     {
-        $this->memento = new Memento($this);
-    }
-
-    public function getMemento()
-    {
-        if (null !== $this->memento) {
-            return $this->memento->get();
-        }
-
-        return null;
-    }
-
-    public function resetMemento()
-    {
-        $this->memento->resetBreakEncapsulation($this);
+        return new Memento($this);
     }
 
     public function getFullName()
@@ -99,13 +67,13 @@ class MementoOriginatorModel
         $this->address = $address;
     }
 
-    public function getTreatment()
+    public function getContent()
     {
-        return $this->treatment;
+        return $this->content;
     }
 
-    public function setTreatment($treatment)
+    public function setContent($content)
     {
-        $this->treatment = $treatment;
+        $this->content = $content;
     }
 }

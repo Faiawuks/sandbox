@@ -2,7 +2,7 @@
 
 namespace Model;
 
-class Treatment
+class Content
 {
     private $description;
 

@@ -44,13 +44,10 @@ class MementoCommand extends CommandService
 
         $mementoOriginatorModel = new \Helper\MementoOriginatorModel();
 
+        $this->output->writeln('Old "age" value was: ' . $mementoOriginatorModel->getAge());
         $this->output->writeln('<comment>Setting memento...</comment>');
-        $this->writeEmpty();
 
-        $mementoOriginatorModel->setMemento();
-        $originalModel = $mementoOriginatorModel->getMemento();
-
-        $this->output->writeln('Old "age" value was: ' . $originalModel->getAge());
+        $memento = $mementoOriginatorModel->setMemento();
 
         $this->output->writeln('<comment>Setting new values...</comment>');
 
@@ -59,19 +56,17 @@ class MementoCommand extends CommandService
 
         $this->output->writeln('Set new "age" value: ' . $mementoOriginatorModel->getAge());
 
-        $newTreatment = new \Model\Treatment();
-        $newTreatment->setDescription('Second test');
-        $mementoOriginatorModel->setTreatment($newTreatment);
+        $newContent = new \Model\Content();
+        $newContent->setDescription('Second test');
+        $mementoOriginatorModel->setContent($newContent);
 
-        if ($mementoOriginatorModel->isDirty()) {
-            $this->writeEmpty();
+        if ($memento->isDirty($mementoOriginatorModel)) {
             $this->output->writeln('<fg=red>Object is dirty!</fg=red>');
         }
 
-        $this->writeEmpty();
         $this->output->writeln('<comment>Restoring model...</comment>');
 
-        $mementoOriginatorModel->resetMemento();
+        $memento->hardReset($mementoOriginatorModel);
 
         $this->output->writeln('Original "age" value restored: ' . $mementoOriginatorModel->getAge());
 

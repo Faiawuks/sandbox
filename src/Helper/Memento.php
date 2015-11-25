@@ -14,18 +14,25 @@ class Memento
     private function create($object)
     {
         if (!is_object($object)) {
+            // Actually better to throw exception.
             return null;
         }
 
         $this->keeper = serialize($object);
     }
 
-    public function get()
+    public function isDirty($possibleDirtyObject)
     {
-        return unserialize($this->keeper);
+        if (null !== $this->keeper) {
+            $memento = unserialize($this->keeper);
+
+            return $memento != $possibleDirtyObject;
+        }
+
+        return false;
     }
 
-    public function resetBreakEncapsulation($dirtyObject)
+    public function hardReset($dirtyObject)
     {
         $workbenchObject = new \ReflectionClass($dirtyObject);
         $workbenchProperties = $workbenchObject->getProperties(
@@ -34,7 +41,7 @@ class Memento
             \ReflectionProperty::IS_PRIVATE
         );
 
-        $originalObject = $this->get();
+        $originalObject = unserialize($this->keeper);
         $blueprintObject = new \ReflectionClass($originalObject);
         $blueprintObjectProperties = $blueprintObject->getProperties(
             \ReflectionProperty::IS_PUBLIC |
@@ -53,9 +60,9 @@ class Memento
         }
     }
 
-    public function resetWithEncapsulation($dirtyObject)
+    public function softReset($dirtyObject)
     {
-        $originalObject = $this->get();
+        $originalObject = unserialize($this->keeper);
         $blueprintObject = new \ReflectionClass($originalObject);
         $blueprintObjectProperties = $blueprintObject->getProperties(
             \ReflectionProperty::IS_PUBLIC |
@@ -73,9 +80,9 @@ class Memento
         }
     }
 
-    public function resetOriginal($dirtyObject)
+    public function manualReset($dirtyObject)
     {
-        $originalObject = $this->get();
+        $originalObject = unserialize($this->keeper);
 
         // Reset dirty object.
         $dirtyObject->setAge($originalObject->getAge());
