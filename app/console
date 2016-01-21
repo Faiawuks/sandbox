@@ -1,20 +1,54 @@
 #!/usr/bin/env php
 <?php
 
-set_time_limit(0);
+class Console
+{
+    /** @var array */
+    private $bootstrap;
 
-$bootstrap = require_once __DIR__ . '/bootstrap.php';
+    /** @var \Silex\Application */
+    private $app;
 
-$app = $bootstrap['console'];
+    /**
+     * Console constructor.
+     */
+    public function __construct()
+    {
+        $this->bootstrap = require_once __DIR__ . '/bootstrap.php';
+        $this->app = $this->bootstrap['console'];
 
-$path = realpath(__DIR__ . "/../") . '/src/Console';
-foreach (glob($path . "/*Command.php") as $filename) {
-    $basename = basename($filename, '.php');
-    $commandWithNamespace = '\\Console\\' . $basename;
+        $this->addCommandsFromDirectory('/src/Console', 'Console');
+        $this->addCommandsFromDirectory('/Auction', 'Auction');
+    }
 
-    $app->add(new $commandWithNamespace($bootstrap));
+    /**
+     * Run console applications.
+     */
+    public function run()
+    {
+        $this->app->run();
+    }
+
+    /**
+     * Register console commands.
+     *
+     * @param string $path
+     * @param string $namespace
+     */
+    private function addCommandsFromDirectory($path, $namespace)
+    {
+        foreach (glob(realpath(__DIR__ . "/../") . $path . "/*Command.php") as $filename) {
+            $basename = basename($filename, '.php');
+            $commandWithNamespace = '\\' . $namespace . '\\' . $basename;
+
+            $this->app->add(new $commandWithNamespace($this->bootstrap));
+        }
+    }
 }
 
-$app->run();
+set_time_limit(0);
+
+$console = new Console();
+$console->run();
 
 ?>

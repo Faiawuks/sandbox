@@ -1,9 +1,12 @@
 {
-    "require": {
-        "silex/silex": "~1.3",
-        "knplabs/console-service-provider": "dev-master"
-    },
-    "autoload": {
-        "psr-0": {"": "src/"}
+  "require": {
+    "silex/silex": "~1.3",
+    "knplabs/console-service-provider": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "": "src",
+      "Auction\\": "Auction"
     }
+  }
 }
