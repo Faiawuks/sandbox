@@ -20,8 +20,8 @@ class AuctionCommand extends CommandService
     /**
      * Execute command.
      *
-     * @param \Symfony\Component\Console\Input\InputInterface   $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param InputInterface  $input
+     * @param OutputInterface $output
      *
      * @return void
      */
@@ -43,7 +43,10 @@ class AuctionCommand extends CommandService
         $this->output->writeln('<info>Commencing Auction.</info>');
         $this->writeEmpty();
 
+        $sessionService = $this->app['auction.session_service'];
+        $session = $sessionService->setUpRandomSession();
 
+        $sessionService->runSession($session);
 
         $this->writeEmpty();
         $this->output->writeln('<info>Auction has ended.</info>');
