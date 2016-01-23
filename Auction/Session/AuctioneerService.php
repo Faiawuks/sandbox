@@ -28,14 +28,25 @@ class AuctioneerService
     }
 
     /**
+     * Attach observer to the notifier (observer subject).
+     *
      * @param ObserverInterface $observer
-     * @param string                     $event
+     * @param string            $event
      */
     public function attachObserver(ObserverInterface $observer, $event)
     {
         $this->sessionNotifier->attach($observer, $event);
     }
 
+    /**
+     * Receive bidding information.
+     *
+     * @param Session $session
+     * @param Bidder  $bidder
+     * @param int     $amount
+     *
+     * @return Bid
+     */
     public function placeBid(Session $session, Bidder $bidder, $amount)
     {
         $bid = new Bid();
@@ -52,6 +63,10 @@ class AuctioneerService
         return $bid;
     }
 
+    /**
+     * @param Session $session
+     * @param Bid     $bidToWithdraw
+     */
     public function withdrawBid(Session $session, Bid $bidToWithdraw)
     {
         $bidToWithdrawId = $bidToWithdraw->getId();
@@ -72,6 +87,11 @@ class AuctioneerService
         }
     }
 
+    /**
+     * Complete/finish bidding for a session.
+     *
+     * @param Session $session
+     */
     public function completeBid(Session $session)
     {
         $session->setStatus(Session::STATUS_DONE);

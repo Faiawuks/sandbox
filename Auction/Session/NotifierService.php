@@ -23,8 +23,10 @@ class NotifierService
     private $session;
 
     /**
+     * Attacht observer to this subject.
+     *
      * @param ObserverInterface $observer
-     * @param string                     $event
+     * @param string            $event
      */
     public function attach(ObserverInterface $observer, $event)
     {
@@ -32,27 +34,40 @@ class NotifierService
     }
 
     /**
+     * Detach observers on this subject.
+     *
      * @param ObserverInterface $observer
      */
-    public function detach(ObserverInterface $observer)
+    public function detach(ObserverInterface $observer, $event)
     {
-        $key = array_search($observer, $this->observers);
+        $key = array_search($observer, $this->observers[$event]);
         if (false !== $key) {
-            unset ($this->observers[$key]);
+            unset ($this->observers[$event][$key]);
         }
     }
 
+    /**
+     * Update session information, and notify events.
+     *
+     * @param Session $session
+     */
     public function update(Session $session)
     {
         $this->session = $session;
         $this->notifyEvents();
     }
 
+    /**
+     * @return Session
+     */
     public function getSession()
     {
         return $this->session;
     }
 
+    /**
+     * Determine subscribed events, and notify observers
+     */
     private function notifyEvents()
     {
         if (Session::STATUS_DONE === $this->session->getStatus()) {
@@ -62,6 +77,11 @@ class NotifierService
         $this->notify(static::EVENT_SESSION_LIVE);
     }
 
+    /**
+     * Notify all subscribed observers on their events.
+     *
+     * @param string $event
+     */
     private function notify($event)
     {
         if (!array_key_exists($event, $this->observers)) {
