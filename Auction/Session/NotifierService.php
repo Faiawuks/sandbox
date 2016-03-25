@@ -2,13 +2,14 @@
 
 namespace Auction\Session;
 
+use Auction\AbstractEventNotifier;
 use Auction\Model\Session;
 use Auction\Observer\ObserverInterface;
 
 /**
  * This class behaves as the Observer Subject.
  */
-class NotifierService
+class NotifierService extends AbstractEventNotifier
 {
     /** @var string */
     const EVENT_SESSION_RESULT = 'auction.result';
@@ -16,35 +17,8 @@ class NotifierService
     /** @var string */
     const EVENT_SESSION_LIVE = 'auction.live';
 
-    /** @var ObserverInterface[] */
-    private $observers = array();
-
     /** @var Session */
     private $session;
-
-    /**
-     * Attacht observer to this subject.
-     *
-     * @param ObserverInterface $observer
-     * @param string            $event
-     */
-    public function attach(ObserverInterface $observer, $event)
-    {
-        $this->observers[$event][] = $observer;
-    }
-
-    /**
-     * Detach observers on this subject.
-     *
-     * @param ObserverInterface $observer
-     */
-    public function detach(ObserverInterface $observer, $event)
-    {
-        $key = array_search($observer, $this->observers[$event]);
-        if (false !== $key) {
-            unset ($this->observers[$event][$key]);
-        }
-    }
 
     /**
      * Update session information, and notify events.

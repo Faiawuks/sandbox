@@ -6,7 +6,8 @@
   "autoload": {
     "psr-4": {
       "": "src",
-      "Auction\\": "Auction"
+      "Auction\\": "Auction",
+      "BankApp\\": "BankApp"
     }
   }
 }

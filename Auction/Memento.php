@@ -2,6 +2,9 @@
 
 namespace Auction;
 
+use ReflectionClass;
+use ReflectionProperty;
+
 class Memento
 {
     /** @var object */
@@ -62,19 +65,19 @@ class Memento
      */
     public function reset($dirtyObject)
     {
-        $workbenchObject = new \ReflectionClass($dirtyObject);
+        $workbenchObject = new ReflectionClass($dirtyObject);
         $workbenchProperties = $workbenchObject->getProperties(
-            \ReflectionProperty::IS_PUBLIC |
-            \ReflectionProperty::IS_PROTECTED |
-            \ReflectionProperty::IS_PRIVATE
+            ReflectionProperty::IS_PUBLIC |
+            ReflectionProperty::IS_PROTECTED |
+            ReflectionProperty::IS_PRIVATE
         );
 
         $originalObject = unserialize($this->keeper);
-        $blueprintObject = new \ReflectionClass($originalObject);
+        $blueprintObject = new ReflectionClass($originalObject);
         $blueprintObjectProperties = $blueprintObject->getProperties(
-            \ReflectionProperty::IS_PUBLIC |
-            \ReflectionProperty::IS_PROTECTED |
-            \ReflectionProperty::IS_PRIVATE
+            ReflectionProperty::IS_PUBLIC |
+            ReflectionProperty::IS_PROTECTED |
+            ReflectionProperty::IS_PRIVATE
         );
 
         foreach ($blueprintObjectProperties as $blueprintPropertyKey => $blueprintProperty) {

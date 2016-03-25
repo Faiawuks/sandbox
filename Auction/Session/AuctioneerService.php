@@ -76,7 +76,7 @@ class AuctioneerService
         unset($this->sessionHistory[$bidToWithdrawId]);
 
         if ($mostRecentBid->getId() === $bidToWithdrawId) {
-            // Reset current session to new most recent session.
+            // Most recent bid was withdrawn, reset current session pointer to session before most recent.
             $newMostRecentBid = $bidToWithdrawId - 1;
             if (array_key_exists($newMostRecentBid, $this->sessionHistory)) {
                 $newMostRecentSessionAction = $this->sessionHistory[$newMostRecentBid];
