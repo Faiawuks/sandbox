@@ -54,8 +54,6 @@ class AuctionCommand extends CommandService
         $this->output->writeln('<info>Commencing Auction.</info>');
         $this->writeEmpty();
 
-        /** @var \Auction\SessionService $sessionService */
-
         $session = $this->sessionService->setUpRandomSession();
 
         $this->sessionService->runSession($session);
