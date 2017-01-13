@@ -23,9 +23,9 @@ class SessionService
     private $websiteObserver;
 
     /**
-     * @param AuctioneerService  $sessionAuctioneer
-     * @param BigMonitorObserver $bigMonitorObserver
-     * @param WebsiteObserver    $websiteObserver
+     * @param \Auction\Session\AuctioneerService $sessionAuctioneer
+     * @param \Auction\Observer\BigMonitorObserver $bigMonitorObserver
+     * @param \Auction\Observer\WebsiteObserver $websiteObserver
      */
     public function __construct(
         AuctioneerService $sessionAuctioneer,
@@ -40,7 +40,7 @@ class SessionService
     /**
      * Set up an auction session.
      *
-     * @return Session
+     * @return \Auction\Model\Session
      */
     public function setUpRandomSession()
     {
@@ -60,9 +60,9 @@ class SessionService
     }
 
     /**
-     * Set up an auction session.
+     * Run an auction flow.
      *
-     * @param Session $session
+     * @param \Auction\Model\Session $session
      */
     public function runSession(Session $session)
     {

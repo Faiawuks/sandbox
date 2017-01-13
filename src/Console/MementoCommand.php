@@ -13,7 +13,7 @@ class MementoCommand extends CommandService
     protected function configure()
     {
         $this
-            ->setName('memento');
+            ->setName('sandbox:memento');
     }
 
     /**
@@ -44,27 +44,33 @@ class MementoCommand extends CommandService
 
         $mementoOriginatorModel = new \Helper\MementoOriginatorModel();
 
-        $this->output->writeln('Old "age" value was: ' . $mementoOriginatorModel->getAge());
-        $this->output->writeln('<comment>Setting memento...</comment>');
+        $this->output->writeln('Original property value on object is: ' . $mementoOriginatorModel->getAge());
+        $this->output->writeln('<comment>Saving object state (memento)...</comment>');
 
         $memento = $mementoOriginatorModel->setMemento();
 
-        $this->output->writeln('<comment>Setting new values...</comment>');
+        sleep(2);
+        $this->output->writeln('<comment>Setting new values on object...</comment>');
 
+        sleep(1);
         $mementoOriginatorModel->setFullName('test123');
         $mementoOriginatorModel->setAge(30);
 
-        $this->output->writeln('Set new "age" value: ' . $mementoOriginatorModel->getAge());
+        $this->output->writeln('New property value object: ' . $mementoOriginatorModel->getAge());
 
         $newContent = new \Model\Content();
         $newContent->setDescription('Second test');
         $mementoOriginatorModel->setContent($newContent);
 
+        sleep(3);
+        $this->output->writeln('<comment>Use dirty check on memento...</comment>');
+        sleep(1);
         if ($memento->isDirty($mementoOriginatorModel)) {
             $this->output->writeln('<fg=red>Object is dirty!</fg=red>');
         }
 
-        $this->output->writeln('<comment>Restoring model...</comment>');
+        sleep(1);
+        $this->output->writeln('<comment>Restoring object...</comment>');
 
         $memento->hardReset($mementoOriginatorModel);
 

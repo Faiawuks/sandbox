@@ -1,6 +1,6 @@
 <?php
 
-namespace Auction\Financial\Model;
+namespace AuctionFinancial\Model;
 
 class Person
 {

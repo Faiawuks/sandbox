@@ -8,22 +8,30 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AuctionCommand extends CommandService
 {
+    /** @var \Auction\SessionService */
+    private $sessionService;
+
     /**
-     * Configure command.
+     * {@inheritDoc}
      */
     protected function configure()
     {
         $this
-            ->setName('auction');
+            ->setName('sandbox:auction');
     }
 
     /**
-     * Execute command.
-     *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return void
+     * {@inheritDoc}
+     */
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        parent::initialize($input, $output);
+
+        $this->sessionService = $this->app['auction.session_service'];
+    }
+
+    /**
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -37,16 +45,20 @@ class AuctionCommand extends CommandService
         $this->sandbox();
     }
 
+    /**
+     * Set up an auction session.
+     */
     private function sandbox()
     {
         $this->writeEmpty();
         $this->output->writeln('<info>Commencing Auction.</info>');
         $this->writeEmpty();
 
-        $sessionService = $this->app['auction.session_service'];
-        $session = $sessionService->setUpRandomSession();
+        /** @var \Auction\SessionService $sessionService */
 
-        $sessionService->runSession($session);
+        $session = $this->sessionService->setUpRandomSession();
+
+        $this->sessionService->runSession($session);
 
         $this->writeEmpty();
         $this->output->writeln('<info>Auction has ended.</info>');

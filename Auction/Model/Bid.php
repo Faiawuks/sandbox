@@ -10,7 +10,7 @@ class Bid
     /** @var int */
     private $amount;
 
-    /** @var Bidder */
+    /** @var \Auction\Model\Bidder */
     private $bidder;
 
     /**
@@ -44,7 +44,7 @@ class Bid
     /**
      * @param int $amount
      *
-     * @return Session
+     * @return $this
      */
     public function setAmount($amount)
     {
@@ -54,7 +54,7 @@ class Bid
     }
 
     /**
-     * @return Bidder
+     * @return \Auction\Model\Bidder
      */
     public function getBidder()
     {
@@ -62,9 +62,9 @@ class Bid
     }
 
     /**
-     * @param Bidder $bidder
+     * @param \Auction\Model\Bidder $bidder
      *
-     * @return Session
+     * @return $this
      */
     public function setBidder($bidder)
     {

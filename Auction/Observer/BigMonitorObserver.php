@@ -11,7 +11,7 @@ use Auction\Session\NotifierService;
 class BigMonitorObserver implements ObserverInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function update(NotifierService $sessionNotifier)
     {

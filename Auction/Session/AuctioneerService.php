@@ -13,14 +13,14 @@ use Auction\Observer\ObserverInterface;
  */
 class AuctioneerService
 {
-    /** @var NotifierService */
+    /** @var \Auction\Session\NotifierService */
     private $sessionNotifier;
 
     /** @var Memento[] */
     private $sessionHistory;
 
     /**
-     * @param NotifierService $sessionNotifier
+     * @param \Auction\Session\NotifierService $sessionNotifier
      */
     public function __construct(NotifierService $sessionNotifier)
     {
@@ -30,8 +30,8 @@ class AuctioneerService
     /**
      * Attach observer to the notifier (observer subject).
      *
-     * @param ObserverInterface $observer
-     * @param string            $event
+     * @param \Auction\Observer\ObserverInterface $observer
+     * @param string $event
      */
     public function attachObserver(ObserverInterface $observer, $event)
     {
@@ -41,11 +41,11 @@ class AuctioneerService
     /**
      * Receive bidding information.
      *
-     * @param Session $session
-     * @param Bidder  $bidder
-     * @param int     $amount
+     * @param \Auction\Model\Session $session
+     * @param \Auction\Model\Bidder $bidder
+     * @param int $amount
      *
-     * @return Bid
+     * @return \Auction\Model\Bid
      */
     public function placeBid(Session $session, Bidder $bidder, $amount)
     {
@@ -64,8 +64,8 @@ class AuctioneerService
     }
 
     /**
-     * @param Session $session
-     * @param Bid     $bidToWithdraw
+     * @param \Auction\Model\Session $session
+     * @param \Auction\Model\Bid $bidToWithdraw
      */
     public function withdrawBid(Session $session, Bid $bidToWithdraw)
     {
@@ -90,7 +90,7 @@ class AuctioneerService
     /**
      * Complete/finish bidding for a session.
      *
-     * @param Session $session
+     * @param \Auction\Model\Session $session
      */
     public function completeBid(Session $session)
     {
@@ -99,7 +99,7 @@ class AuctioneerService
     }
 
     /**
-     * @return Bid
+     * @return \Auction\Model\Bid
      */
     private function getMostRecentBid()
     {

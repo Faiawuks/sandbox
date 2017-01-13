@@ -4,7 +4,6 @@ namespace Auction\Session;
 
 use Auction\AbstractEventNotifier;
 use Auction\Model\Session;
-use Auction\Observer\ObserverInterface;
 
 /**
  * This class behaves as the Observer Subject.
@@ -23,7 +22,7 @@ class NotifierService extends AbstractEventNotifier
     /**
      * Update session information, and notify events.
      *
-     * @param Session $session
+     * @param \Auction\Model\Session $session
      */
     public function update(Session $session)
     {
@@ -32,7 +31,7 @@ class NotifierService extends AbstractEventNotifier
     }
 
     /**
-     * @return Session
+     * @return \Auction\Model\Session
      */
     public function getSession()
     {
@@ -62,7 +61,7 @@ class NotifierService extends AbstractEventNotifier
             return;
         }
 
-        /** @var ObserverInterface $observer */
+        /** @var \Auction\Observer\ObserverInterface $observer */
         foreach($this->observers[$event] as $observer) {
             $observer->update($this);
         }

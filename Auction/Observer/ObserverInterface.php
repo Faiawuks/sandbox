@@ -9,7 +9,7 @@ interface ObserverInterface
     /**
      * Called when a notification has been sent.
      *
-     * @param NotifierService $sessionNotifier
+     * @param \Auction\Session\NotifierService $sessionNotifier
      */
     public function update(NotifierService $sessionNotifier);
 }

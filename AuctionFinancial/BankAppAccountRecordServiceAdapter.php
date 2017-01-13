@@ -1,9 +1,9 @@
 <?php
 
-namespace Auction\Financial;
+namespace AuctionFinancial;
 
-use Auction\Financial\Model\AccountRecord;
-use Auction\Financial\Model\Person;
+use AuctionFinancial\Model\AccountRecord;
+use AuctionFinancial\Model\Person;
 use BankApp\AccountRecordService as BankAppAccountRecordService;
 use BankApp\AccountHolderService as BankAppAccountHolderService;
 

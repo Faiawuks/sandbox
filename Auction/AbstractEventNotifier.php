@@ -12,8 +12,8 @@ abstract class AbstractEventNotifier
     /**
      * Attach observer to this subject.
      *
-     * @param ObserverInterface $observer
-     * @param string            $event
+     * @param \Auction\Observer\ObserverInterface $observer
+     * @param string $event
      */
     public function attach(ObserverInterface $observer, $event)
     {
@@ -23,8 +23,8 @@ abstract class AbstractEventNotifier
     /**
      * Detach observers on this subject.
      *
-     * @param ObserverInterface $observer
-     * @param string            $event
+     * @param \Auction\Observer\ObserverInterface $observer
+     * @param string $event
      */
     public function detach(ObserverInterface $observer, $event)
     {

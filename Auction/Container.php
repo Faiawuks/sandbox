@@ -46,7 +46,7 @@ class Container implements ServiceProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function boot(Application $app) {}
 }

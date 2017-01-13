@@ -15,14 +15,14 @@ class Session
     /** @var Item */
     private $item;
 
-    /** @var Bid */
+    /** @var \Auction\Model\Bid */
     private $bid;
 
     /** @var string */
     private $status;
 
     /**
-     * @return Memento
+     * @return \Auction\Memento
      */
     public function setMemento()
     {
@@ -38,7 +38,7 @@ class Session
     }
 
     /**
-     * @param Item $item
+     * @param \Auction\Model\Item $item
      *
      * @return $this
      */
@@ -50,7 +50,7 @@ class Session
     }
 
     /**
-     * @return Bid
+     * @return \Auction\Model\Bid
      */
     public function getBid()
     {
@@ -58,7 +58,7 @@ class Session
     }
 
     /**
-     * @param Bid $bid
+     * @param \Auction\Model\Bid $bid
      *
      * @return $this
      */
@@ -80,7 +80,7 @@ class Session
     /**
      * @param string $status
      *
-     * @return Session
+     * @return $this
      */
     public function setStatus($status)
     {

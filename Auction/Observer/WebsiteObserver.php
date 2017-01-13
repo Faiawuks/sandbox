@@ -10,7 +10,7 @@ use Auction\Session\NotifierService;
 class WebsiteObserver implements ObserverInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function update(NotifierService $sessionNotifier)
     {

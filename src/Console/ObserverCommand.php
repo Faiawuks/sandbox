@@ -13,7 +13,7 @@ class ObserverCommand extends CommandService
     protected function configure()
     {
         $this
-            ->setName('observer');
+            ->setName('obsolete:observer');
     }
 
     /**
